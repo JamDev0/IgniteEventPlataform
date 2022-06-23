@@ -1,23 +1,25 @@
 import { DateTime } from "luxon";
 
 import { CheckCircle, Lock } from "phosphor-react";
+import { Link, useParams } from "react-router-dom";
 
 interface ClassCardProps {
     availableAt: string;
     title: string;
     lessonType: 'class' | 'live';
-    id: string;
-    verifyIfThisCardIsSelected: (arg: string) => boolean;
-    onClick: (arg: string) => void
+    slugProp: string;
 }
 
-export function ClassCard({availableAt, title, lessonType, id, verifyIfThisCardIsSelected, onClick}: ClassCardProps) {
+export function ClassCard({availableAt, title, lessonType, slugProp}: ClassCardProps) {
     const readableDate = DateTime
                          .fromISO(availableAt)
                          .setLocale('pt-BR')
                          .toFormat("EEEE '•' dd 'de' LLLL '•' HH'h'mm")
                          .replaceAll('-feira', '');
+    
+    const { slug } = useParams<string>();
 
+    console.log(slug)
 
     function isAvailable() {
         let now = DateTime.now();
@@ -26,16 +28,16 @@ export function ClassCard({availableAt, title, lessonType, id, verifyIfThisCardI
     }
 
     function handleSelectVerification() {
-        return verifyIfThisCardIsSelected(id);
+        return slug === slugProp;
     }
 
 
     return(
-        <a
+        <Link
+         to={`/event/lesson/${slugProp}`}
          className="
-            w-full flex flex-col gap-y-[8px]
+            w-full flex flex-col gap-y-[8px] group
          "
-         onClick={() => {onClick(id);}}
         >
 
             <h3
@@ -52,7 +54,7 @@ export function ClassCard({availableAt, title, lessonType, id, verifyIfThisCardI
                 ${handleSelectVerification() ? 
                     'bg-brand-green-500 relative border border-solid border-brand-green-500 before:bg-brand-green-500 before:rounded-[2px] before:w-[14px] before:h-[14px] before:absolute before:top-[50%] before:left-0 before:rotate-45 before:-translate-x-[50%] before:-translate-y-[50%]' 
                   : 
-                    'bg-transparent border border-solid border-base-divisor'
+                    'bg-transparent border border-solid border-base-divisor group-hover:border-brand-green-500'
                 }
                 flex flex-col gap-y-[16px] rounded p-4 w-full transition-colors
              `}
@@ -116,6 +118,6 @@ export function ClassCard({availableAt, title, lessonType, id, verifyIfThisCardI
                 </p>
             </section>
 
-        </a>
+        </Link>
     )
 }

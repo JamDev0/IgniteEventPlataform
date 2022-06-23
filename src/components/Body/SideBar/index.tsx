@@ -1,5 +1,4 @@
 import { gql, useQuery } from "@apollo/client";
-import { useState } from "react";
 
 import { ClassCard } from "./ClassCard";
 
@@ -28,16 +27,8 @@ interface lessonsQueryInterface {
 }
 
 export function SideBar() {
-    const [selectedCardId, setSelectedCardId] = useState<string>('');
     const { data } = useQuery<lessonsQueryInterface>(GET_LESSONS_QUERY);
 
-    function handleCardClick(id: string) {
-        setSelectedCardId(id);
-    }
-
-    function handleCardSelectionVerification(id: string) {
-        return selectedCardId === id
-    }
 
     return(
         <nav
@@ -59,17 +50,14 @@ export function SideBar() {
                 ? 
                     data!.lessons.length > 0
                     ?
-                        data!.lessons.map(({ availableAt, lessonType, title, id }) => {
+                        data!.lessons.map(({ availableAt, lessonType, title, id, slug}) => {
                             return (
                                 <ClassCard
                                  key={id}
                                  availableAt={availableAt}
                                  lessonType={lessonType}
                                  title={title}
-                                 id={id}
-                                 onClick={handleCardClick}
-                                 verifyIfThisCardIsSelected={handleCardSelectionVerification}
-
+                                 slugProp={slug}
                                 />
                             )
                         })

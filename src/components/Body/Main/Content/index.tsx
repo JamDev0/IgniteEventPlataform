@@ -1,12 +1,20 @@
 import { DiscordLogo, Lightning } from "phosphor-react";
+import { Link } from "react-router-dom";
 import { Teacher } from "../../../Teacher";
 import { AccessCard } from "./AccessCard";
 
-export function Content() {
+interface ContentProps {
+    title: string;
+    description: string;
+    challengeUrl?: string;
+    teacherId: string;
+}
+
+export function Content({ title, description, challengeUrl, teacherId }: ContentProps) {
     return(
         <section
          className="
-            flex flex-col gap-y-[80px]
+            flex flex-col gap-y-[80px] px-8 pt-8
          "
         >
             <section
@@ -14,7 +22,6 @@ export function Content() {
                 flex gap-x-14
             "
             >
-
                 <section
                 className="
                     flex flex-col
@@ -26,7 +33,7 @@ export function Content() {
                         font-bold text-base-text-title text-2xl mb-[16px]
                     "
                     >
-                        Aula 01 - Criando o projeto e realizando o setup inicial
+                        {title}
                     </h2>
 
                     <p
@@ -34,10 +41,12 @@ export function Content() {
                         text-base text-base-text-body mb-[24px]
                     "
                     >
-                        Nessa aula vamos dar início ao projeto criando a estrutura base da aplicação utilizando ReactJS, Vite e TailwindCSS. Vamos também realizar o setup do nosso projeto no GraphCMS criando as entidades da aplicação e integrando a API GraphQL gerada pela plataforma no nosso front-end utilizando Apollo Client.
+                        {description}
                     </p>
 
-                    <Teacher/>
+                    <Teacher 
+                     id={teacherId}
+                    />
                 </section>
 
                 <section
@@ -45,23 +54,31 @@ export function Content() {
                     flex flex-col min-w-fit gap-y-[16px]
                 "
                 >
-                    <button
+                    <a
                     className="
-                        bg-brand-green-500 text-white text-sm flex justify-center gap-x-[0.65rem] py-4 px-[0.85rem] font-bold rounded w-full min-w-fit uppercase
+                        bg-brand-green-500 text-white text-sm flex justify-center gap-x-[0.65rem] py-4 px-[0.85rem] font-bold rounded w-full min-w-fit uppercase transition-colors cursor-pointer
+                        hover:bg-brand-green-600
                     "
                     >
                         <DiscordLogo />
                         Comunidade no discord
-                    </button>
+                    </a>
 
-                    <button
-                    className="
-                        border border-solid border-brand-blue-300 font-bold text-brand-blue-300 text-sm flex justify-center gap-x-[0.65rem] rounded py-4 px-2 w-full min-w-fit uppercase
-                    "
-                    >
-                        <Lightning/>
-                        Acesse o desafio
-                    </button>
+                    {
+                        challengeUrl ? 
+                            <Link
+                             to={challengeUrl}
+                             className="
+                                border border-solid border-brand-blue-300 font-bold text-brand-blue-300 text-sm flex justify-center gap-x-[0.65rem] rounded py-4 px-2 w-full min-w-fit uppercase transition-colors
+                                hover:bg-brand-blue-300 hover:text-base-element
+                             "
+                            >
+                                <Lightning/>
+                                Acesse o desafio
+                            </Link>
+                        :
+                            null
+                    }
                 </section>
             </section>
 

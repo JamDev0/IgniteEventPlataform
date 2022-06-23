@@ -2,7 +2,7 @@ import { CaretRight, Download } from "phosphor-react"
 
 export function AccessCard() {
     return(
-        <section
+        <a
          className="
             flex flex-1 rounded min-w-fit max-w-[550px] overflow-hidden cursor-pointer
          "
@@ -50,6 +50,6 @@ export function AccessCard() {
              "
             />
             </section>
-        </section>
+        </a>
     )
 }

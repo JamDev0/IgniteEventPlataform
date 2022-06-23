@@ -1,4 +1,46 @@
-export function Teacher() {
+import { gql, useQuery } from "@apollo/client"
+import { useEffect } from "react";
+
+
+const GET_TEACHER_BY_ID = gql`
+    query getTeacherById($id: ID) {
+        teacher(where: {id: $id}) {
+            avatarURL
+            bio
+            name
+        }
+    }
+`
+
+interface TeacherProps {
+    id: string
+}
+
+interface getTeacherQuery {
+    teacher: {
+        avatarURL: string;
+        bio: string;
+        name: string;
+    }
+}
+
+export function Teacher({ id }: TeacherProps) {
+    const { data } = useQuery<getTeacherQuery>(GET_TEACHER_BY_ID, {
+        variables: {
+            id: id,
+        }
+    });
+
+    useEffect(()=>{
+        console.log('Teacher', id)
+    },[id])
+
+
+    if(!data) {
+        return (<p>loading...</p>)
+    }
+
+
     return(
         <section
          className="
@@ -7,7 +49,7 @@ export function Teacher() {
         >
 
             <img 
-             src="https://avatars.githubusercontent.com/u/61752887?v=4"
+             src={data.teacher.avatarURL}
              className="
                 rounded-full object-cover object-center h-16 w-16 aspect-square border-2 border-solid border-brand-blue-300
              "
@@ -24,7 +66,7 @@ export function Teacher() {
                  "
                 >
 
-                    Juan Garcia
+                    {data.teacher.name}
                 </h2>
 
                 <span
@@ -32,7 +74,7 @@ export function Teacher() {
                     text-sm text-base-text-secondaryBody
                  "
                 >
-                    Front-End Dev
+                    {data.teacher.bio}
                 </span>
             </section>
         </section>
