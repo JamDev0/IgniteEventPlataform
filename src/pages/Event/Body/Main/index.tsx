@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Content } from "./Content";
-import { Footer } from "./Footer";
+import { Footer } from "../../../../components/Footer";
 
 import { Video } from "./Video";
 
@@ -47,12 +47,6 @@ export function Main() {
             slug: slug,
         },
     });
-
-    console.log(data)
-
-    useEffect(()=>{
-        console.log(data)
-    },[data])
 
     return(
         <main

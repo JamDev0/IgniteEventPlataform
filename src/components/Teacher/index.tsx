@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client"
-import { useEffect } from "react";
 
+import { useEffect } from "react";
 
 const GET_TEACHER_BY_ID = gql`
     query getTeacherById($id: ID) {

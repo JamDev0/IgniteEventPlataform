@@ -19,8 +19,6 @@ export function ClassCard({availableAt, title, lessonType, slugProp}: ClassCardP
     
     const { slug } = useParams<string>();
 
-    console.log(slug)
-
     function isAvailable() {
         let now = DateTime.now();
 

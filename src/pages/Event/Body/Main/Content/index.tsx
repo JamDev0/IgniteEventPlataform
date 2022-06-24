@@ -1,6 +1,6 @@
 import { DiscordLogo, Lightning } from "phosphor-react";
 import { Link } from "react-router-dom";
-import { Teacher } from "../../../Teacher";
+import { Teacher } from "../../../../../components/Teacher";
 import { AccessCard } from "./AccessCard";
 
 interface ContentProps {
