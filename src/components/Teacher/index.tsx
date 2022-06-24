@@ -1,31 +1,17 @@
 import { gql, useQuery } from "@apollo/client"
 
 import { useEffect } from "react";
+import { useGetTeacherByIdQuery } from "../../graphql/generated";
 
-const GET_TEACHER_BY_ID = gql`
-    query getTeacherById($id: ID) {
-        teacher(where: {id: $id}) {
-            avatarURL
-            bio
-            name
-        }
-    }
-`
+
 
 interface TeacherProps {
     id: string
 }
 
-interface getTeacherQuery {
-    teacher: {
-        avatarURL: string;
-        bio: string;
-        name: string;
-    }
-}
 
 export function Teacher({ id }: TeacherProps) {
-    const { data } = useQuery<getTeacherQuery>(GET_TEACHER_BY_ID, {
+    const { data } = useGetTeacherByIdQuery({
         variables: {
             id: id,
         }
@@ -49,7 +35,7 @@ export function Teacher({ id }: TeacherProps) {
         >
 
             <img 
-             src={data.teacher.avatarURL}
+             src={data?.teacher?.avatarURL}
              className="
                 rounded-full object-cover object-center h-16 w-16 aspect-square border-2 border-solid border-brand-blue-300
              "
@@ -66,7 +52,7 @@ export function Teacher({ id }: TeacherProps) {
                  "
                 >
 
-                    {data.teacher.name}
+                    {data.teacher?.name}
                 </h2>
 
                 <span
@@ -74,7 +60,7 @@ export function Teacher({ id }: TeacherProps) {
                     text-sm text-base-text-secondaryBody
                  "
                 >
-                    {data.teacher.bio}
+                    {data.teacher?.bio}
                 </span>
             </section>
         </section>

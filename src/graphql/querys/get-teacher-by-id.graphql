@@ -1,0 +1,7 @@
+query getTeacherById($id: ID) {
+    teacher(where: {id: $id}) {
+        avatarURL
+        bio
+        name
+    }
+}

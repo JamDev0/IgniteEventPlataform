@@ -1,4 +1,4 @@
-import RocketLogo from '../../../../assets/RocketLogo.svg';
+import RocketLogo from '../../assets/RocketLogo.svg';
 
 export function Footer() {
     return(
